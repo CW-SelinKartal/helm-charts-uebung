@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root-app
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/CW-SelinKartal/helm-charts-uebung
+    path: charts/root-app/
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: root-app
+  syncPolicy:
+    automated:
+      selfHeal: true

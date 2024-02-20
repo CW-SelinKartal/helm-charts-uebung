@@ -1,0 +1,11 @@
+#To override the chart values of a dependency, we have to place them under the dependency name
+argo-cd:
+  dex:
+    enabled: false
+  notifications:
+    enabled: false
+  applicationSet:
+    enabled: false
+  server:
+    extraArgs:
+      - --insecure
