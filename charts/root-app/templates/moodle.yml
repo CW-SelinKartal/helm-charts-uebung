@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: moodle
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://charts.bitnami.com/bitnami'
+    targetRevision: '20.3.0'  
+    chart: moodle
+    helm:
+      values: |
+        mariadb:
+          auth:
+            rootPassword: 'secretpassword'  # Setzen Sie hier ein sicheres Passwort
+            database: 'moodle'
+            username: 'moodleuser'
+            password: 'moodlepassword'  # Setzen Sie hier ein sicheres Passwort
+        moodleUsername: 'admin'
+        moodlePassword: 'adminpassword'  # Setzen Sie hier ein sicheres Passwort
+        moodleEmail: 'user@example.com'
+        service:
+          type: LoadBalancer
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
