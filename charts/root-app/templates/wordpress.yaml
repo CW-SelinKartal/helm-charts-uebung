@@ -7,8 +7,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://charts.bitnami.com/bitnami'
-    targetRevision: 'latest'
+    repoURL: 'oci://registry-1.docker.io/bitnamicharts/wordpress'
+    targetRevision: '19.3.0'
     chart: wordpress
     helm:
       values: |
