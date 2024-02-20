@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dokuwiki
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://charts.bitnami.com/bitnami'
+    targetRevision: '14.7.0'
+    chart: dokuwiki
+    helm:
+      values: |
+        dokuwikiUsername: 'admin'
+        dokuwikiPassword: 'adminpassword'  
+        dokuwikiEmail: 'user@example.com'
+        service:
+          type: LoadBalancer
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default 
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
