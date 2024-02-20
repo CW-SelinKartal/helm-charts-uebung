@@ -5,6 +5,8 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
+  hostNetwork: false
+  hostPID: false
   project: default
   source:
     repoURL: https://prometheus-community.github.io/helm-charts
