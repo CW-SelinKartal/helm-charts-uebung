@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prestashop
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://charts.bitnami.com/bitnami'
+    targetRevision: '15.0.3'  # Ersetzen Sie dies durch die gewünschte Version von PrestaShop
+    chart: prestashop
+    helm:
+      values: |
+        prestashopUsername: 'user'
+        prestashopPassword: 'password'  # Setzen Sie hier ein sicheres Passwort
+        prestashopEmail: 'user@example.com'
+        mariadb:
+          auth:
+            rootPassword: 'secretpassword'  # Setzen Sie hier ein sicheres Passwort
+            password: 'dbpassword'  # Setzen Sie hier ein sicheres Passwort
+        service:
+          type: LoadBalancer
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: prestashop  # Erstellen Sie ggf. diesen Namespace oder verwenden Sie einen vorhandenen
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
